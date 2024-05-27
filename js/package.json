@@ -1,0 +1,22 @@
+{
+  "name": "rabbitmq_js_test",
+  "module": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "bun --env-file=../.env run index.js ",
+    "test": "bun --env-file=../.env test",
+    "test_ci": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.3.0",
+    "@types/amqplib": "^0.10.5",
+    "amqplib": "^0.10.4",
+    "eslint": "^9.3.0"
+  }
+}
