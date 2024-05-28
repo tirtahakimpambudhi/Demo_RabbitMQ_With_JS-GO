@@ -87,6 +87,7 @@ describe("Testing Environment Variable", () => {
     ]
     testCases.forEach((testCase,index) => {
         index++
+         console.info(testCase.value);  
         it(`Case ${index} : ${testCase.name}`,() => {
             expect(typeof(testCase.expectValue)).toBe(typeof(testCase.value));
         })
