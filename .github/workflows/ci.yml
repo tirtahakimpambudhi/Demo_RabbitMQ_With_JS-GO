@@ -35,9 +35,9 @@ jobs:
         name: 'Checkout repository'
       
       - uses: oven-sh/setup-bun@v1
-      
-      - name: 'Check Environment Varible'
-        run: echo ${{secrets.APP_ENV}}
+
+      - name: 'Check Environment Variable'
+        run: echo $APP_ENV
 
       - name: 'Install Dependencies'
         run: bun install
