@@ -1,0 +1,60 @@
+name: Continuous Integration Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  test_js:
+    env: 
+      APP_ENV: "testing"
+      SECRET_KEY: "secret"
+      MESSAGE_BROKER_PROTOCOL: "amqps"
+      MESSAGE_BROKER_USER: "huscwecb"
+      MESSAGE_BROKER_PASSWORD: "rp8Ty5Ef1UoZfNaYNbyXxXR9FA7XrEUO"
+      MESSAGE_BROKER_VIRTUAL_HOST: "huscwecb"
+      MESSAGE_BROKER_HOST: "beaver.rmq.cloudamqp.com"
+      MESSAGE_BROKER_PORT: "15672"
+      MESSAGE_BROKER_CLOUD: "amqps://huscwecb:rp8Ty5Ef1UoZfNaYNbyXxXR9FA7XrEUO@beaver.rmq.cloudamqp.com/huscwecb"
+      EXCHANGE_PROCESS_SERVICE: "process.publish.service"
+      QUEUE_PROCESS_SERVICE: "process.subscribe.service"
+      ROUTING_KEY_PROCESS_SERVICE: "process.monitor.service"
+
+    name: Testing JavaScript
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./js
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: 'Checkout repository'
+      
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: 'Install Dependencies'
+        run: bun install
+    
+      - name: 'Run Tests'
+        run: bun run test
+  lint_js:
+    name: Testing JavaScript
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./js
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: 'Checkout repository'
+            
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: 'Install Dependencies'
+        run: bun install
+          
+      - name: 'Run LInt'
+        run: bunx eslint .
+      
