@@ -2,3 +2,4 @@
 ./js/node_modules/
 ./go/log/
 ./go/test/log/
+./js/bun.lockb
