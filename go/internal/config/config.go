@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/spf13/cast"
@@ -22,7 +23,7 @@ func NewConfig() (*Config, error) {
 
 	err := vip.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+		if errors.Is(err,viper.ConfigFileNotFoundError{}) {
 			// Log the error but do not return, allowing env variables to be used
 			fmt.Println("Config file not found; using environment variables only")
 		} else {
