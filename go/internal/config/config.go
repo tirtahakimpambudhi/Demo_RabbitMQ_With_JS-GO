@@ -23,7 +23,9 @@ func NewConfig() (*Config, error) {
 
 	err := vip.ReadInConfig()
 	if err != nil {
-		var configFileNotFoundError *viper.ConfigFileNotFoundError
+		// is for errors.new type
+		// as for errors custom struct with implement error struct golang
+		var configFileNotFoundError viper.ConfigFileNotFoundError
 		if errors.As(err, &configFileNotFoundError) {
 			// Log the error but do not return, allowing env variables to be used
 			fmt.Println("Config file not found; using environment variables only")
