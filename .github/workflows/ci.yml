@@ -41,7 +41,6 @@ jobs:
         run: bun install
       - name: 'Print APP KEY'
         run: bun --print process.env
-      
       - name: 'Run Tests'
         run: bun run test_ci
 
@@ -78,3 +77,71 @@ jobs:
           
       - name: 'Run Lint'
         run: bunx eslint .
+  test_go:
+    name: Testing Golang
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '==1.22.2'
+      - name: Set environment variables
+        run: |
+          echo "APP_ENV=${{ secrets.APP_ENV }}" >> $GITHUB_ENV
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PROTOCOL=${{ secrets.MESSAGE_BROKER_PROTOCOL }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_USER=${{ secrets.MESSAGE_BROKER_USER }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PASSWORD=${{ secrets.MESSAGE_BROKER_PASSWORD }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_VIRTUAL_HOST=${{ secrets.MESSAGE_BROKER_VIRTUAL_HOST }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_HOST=${{ secrets.MESSAGE_BROKER_HOST }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PORT=${{ secrets.MESSAGE_BROKER_PORT }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_CLOUD=${{ secrets.MESSAGE_BROKER_CLOUD }}" >> $GITHUB_ENV
+          echo "EXCHANGE_PROCESS_SERVICE=${{ secrets.EXCHANGE_PROCESS_SERVICE }}" >> $GITHUB_ENV
+          echo "QUEUE_PROCESS_SERVICE=${{ secrets.QUEUE_PROCESS_SERVICE }}" >> $GITHUB_ENV
+          echo "ROUTING_KEY_PROCESS_SERVICE=${{ secrets.ROUTING_KEY_PROCESS_SERVICE }}" >> $GITHUB_ENV
+ 
+      - name: 'Install Dependencies'
+        run: go mod tidy
+      - name: 'Run Test'
+        run: go test ./... -v
+  lint_go:
+    name: Testing Golang
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '==1.22.2'
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.58
+      - name: Set environment variables
+        run: |
+          echo "APP_ENV=${{ secrets.APP_ENV }}" >> $GITHUB_ENV
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PROTOCOL=${{ secrets.MESSAGE_BROKER_PROTOCOL }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_USER=${{ secrets.MESSAGE_BROKER_USER }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PASSWORD=${{ secrets.MESSAGE_BROKER_PASSWORD }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_VIRTUAL_HOST=${{ secrets.MESSAGE_BROKER_VIRTUAL_HOST }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_HOST=${{ secrets.MESSAGE_BROKER_HOST }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PORT=${{ secrets.MESSAGE_BROKER_PORT }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_CLOUD=${{ secrets.MESSAGE_BROKER_CLOUD }}" >> $GITHUB_ENV
+          echo "EXCHANGE_PROCESS_SERVICE=${{ secrets.EXCHANGE_PROCESS_SERVICE }}" >> $GITHUB_ENV
+          echo "QUEUE_PROCESS_SERVICE=${{ secrets.QUEUE_PROCESS_SERVICE }}" >> $GITHUB_ENV
+          echo "ROUTING_KEY_PROCESS_SERVICE=${{ secrets.ROUTING_KEY_PROCESS_SERVICE }}" >> $GITHUB_ENV
+ 
+      - name: 'Install Dependencies'
+        run: go mod tidy
+      - name: 'Run Lint'
+        run: golangci-lint run ./...
+
+
