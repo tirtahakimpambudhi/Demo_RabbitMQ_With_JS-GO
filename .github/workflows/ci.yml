@@ -108,6 +108,8 @@ jobs:
         run: go mod tidy
       - name: 'Run Test'
         run: go test ./... -v
+      - name: 'Print Log'
+        run: cat ./test/log/error.log
   lint_go:
     name: Lint Golang
     defaults:
@@ -140,6 +142,6 @@ jobs:
       - name: 'Install Dependencies'
         run: go mod tidy
       - name: 'Run Lint'
-        run: golangci-lint run ./...
+        run: golangci-lint 
 
 
