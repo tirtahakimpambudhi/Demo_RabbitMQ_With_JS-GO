@@ -3,3 +3,5 @@
 ./go/log/
 ./go/test/log/
 ./js/bun.lockb
+.env.prod
+.env.dev
