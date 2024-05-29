@@ -5,7 +5,7 @@
   "scripts": {
     "start": "bun --env-file=../.env run index.js ",
     "test": "bun --env-file=../.env test",
-    "test_ci": "bun test ./test/environment.test.js"
+    "test_ci": "bun test"
   },
   "devDependencies": {
     "@types/bun": "latest"
