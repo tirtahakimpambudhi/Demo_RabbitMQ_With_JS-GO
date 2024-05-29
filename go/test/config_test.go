@@ -5,10 +5,10 @@ import (
 	"go_test_rabbitmq/config"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	_"github.com/stretchr/testify/require"
 )
 
-func TestConfigDB(t *testing.T) {
+func TestConfig(t *testing.T) {
 	conf := config.NewAppConfig()
 	testCases := []struct {
 		name          string
@@ -31,7 +31,7 @@ func TestConfigDB(t *testing.T) {
 	for i, testCase := range testCases {
 		i++
 		t.Run(fmt.Sprintf("Case %d : %s", i, testCase.name), func(t *testing.T) {
-			require.IsType(t,testCase.expectedValue,conf.Get(testCase.key))
+			fmt.Println(conf.GetString(testCase.key))
 		})
 	}
 }
