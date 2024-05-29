@@ -136,6 +136,8 @@ jobs:
           echo "ROUTING_KEY_PROCESS_SERVICE=${{ secrets.ROUTING_KEY_PROCESS_SERVICE }}" >> $GITHUB_ENV
       - name: 'Install Dependencies'
         run: go mod tidy
+      - name: 'Check Directory'
+        run: ls -a
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
