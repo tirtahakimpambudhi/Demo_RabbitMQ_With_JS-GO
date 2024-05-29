@@ -16,9 +16,11 @@ func NewConfig() (*Config, error) {
 	vip.AddConfigPath("../../")
 	vip.SetConfigName(".env")
 	vip.SetConfigType("env")
-	vip.AutomaticEnv()
 	if err := vip.ReadInConfig(); err != nil {
-		return nil, err
+		vip.AutomaticEnv()
+		if err := vip.ReadInConfig(); err != nil {
+			return nil, err
+		}
 	}
 	return &Config{vip: vip}, nil
 }
