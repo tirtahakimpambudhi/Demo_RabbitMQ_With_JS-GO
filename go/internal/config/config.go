@@ -1,6 +1,8 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/spf13/cast"
 	"github.com/spf13/viper"
 )
@@ -16,12 +18,19 @@ func NewConfig() (*Config, error) {
 	vip.AddConfigPath("../../")
 	vip.SetConfigName(".env")
 	vip.SetConfigType("env")
-	if err := vip.ReadInConfig(); err != nil {
-		vip.AutomaticEnv()
-		if err := vip.ReadInConfig(); err != nil {
+	vip.AutomaticEnv() // Automatically read environment variables
+
+	err := vip.ReadInConfig()
+	if err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Log the error but do not return, allowing env variables to be used
+			fmt.Println("Config file not found; using environment variables only")
+		} else {
+			// If there was another error (e.g., malformed file), return it
 			return nil, err
 		}
 	}
+
 	return &Config{vip: vip}, nil
 }
 
