@@ -109,7 +109,7 @@ jobs:
       - name: 'Run Test'
         run: go test ./... -v
   lint_go:
-    name: Testing Golang
+    name: Lint Golang
     defaults:
       run:
         shell: bash
@@ -122,8 +122,6 @@ jobs:
           go-version: '<=1.22.2'
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
-        with:
-          version: v1.58
       - name: Set environment variables
         run: |
           echo "APP_ENV=${{ secrets.APP_ENV }}" >> $GITHUB_ENV
