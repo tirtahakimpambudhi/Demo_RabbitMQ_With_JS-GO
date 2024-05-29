@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	cfg "go_test_rabbitmq/internal/config"
 	"go_test_rabbitmq/internal/logger"
 )
@@ -9,6 +10,7 @@ func NewAppConfig() *cfg.Config {
 	log := logger.NewLogger()
 	appConfig , err := cfg.NewConfig()
 	if err != nil {
+		fmt.Println(err.Error())
 		log.Errorln(err.Error())
 	}
 	// SET CONFIG
