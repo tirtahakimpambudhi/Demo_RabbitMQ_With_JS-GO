@@ -1,7 +1,7 @@
 .env
 ./js/node_modules/
 ./go/log/
-./go/test/log/
+
 ./js/bun.lockb
 .env.prod
 .env.dev
