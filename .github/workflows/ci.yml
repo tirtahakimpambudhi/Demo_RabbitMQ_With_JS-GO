@@ -36,8 +36,6 @@ jobs:
       
       - name: 'Install Dependencies'
         run: bun install
-      - name: 'Print APP KEY'
-        run: bun --print process.env
       - name: 'Run Tests'
         run: bun run test_ci
 
