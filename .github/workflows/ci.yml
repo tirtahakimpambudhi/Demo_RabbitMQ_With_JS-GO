@@ -109,7 +109,7 @@ jobs:
       - name: 'Run Test'
         run: go test ./... -v
   lint_go:
-    name: Lint Golang
+    name: Linting Golang
     defaults:
       run:
         shell: bash
@@ -120,8 +120,6 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '<=1.22.2'
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
       - name: Set environment variables
         run: |
           echo "APP_ENV=${{ secrets.APP_ENV }}" >> $GITHUB_ENV
@@ -136,10 +134,13 @@ jobs:
           echo "EXCHANGE_PROCESS_SERVICE=${{ secrets.EXCHANGE_PROCESS_SERVICE }}" >> $GITHUB_ENV
           echo "QUEUE_PROCESS_SERVICE=${{ secrets.QUEUE_PROCESS_SERVICE }}" >> $GITHUB_ENV
           echo "ROUTING_KEY_PROCESS_SERVICE=${{ secrets.ROUTING_KEY_PROCESS_SERVICE }}" >> $GITHUB_ENV
- 
       - name: 'Install Dependencies'
         run: go mod tidy
-      - name: 'Run Lint'
-        run: golangci-lint 
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.56.0
+          args: --config .golangci.yaml
+
 
 
